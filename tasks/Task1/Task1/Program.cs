@@ -10,7 +10,7 @@ namespace Task1
     {
         static int Main(string[] args)
         {
-            Console.WriteLine("Helo World!");
+            Console.WriteLine("Hello cruel World! Thank you for making me boot into Windows because Xamarin likes Flatpak now");
             return 0;
         }
     }
