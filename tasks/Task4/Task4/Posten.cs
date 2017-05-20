@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+
 namespace Task4
 {
 
@@ -13,7 +15,10 @@ namespace Task4
             Belastung,
             Gutschrift
         }
+
+        [JsonIgnore]
         public art Art;
+
         private decimal _Betrag;
         public virtual decimal Betrag
         {
@@ -79,21 +84,20 @@ namespace Task4
 
     }
 
-    //Codeduplizierung zwischen Belastung und Gutscrhift weil laut Angabe explizit Interface gefragt - vieles hätte in eine "substanzreichere" abstrakte Basisklasse Posten besser gepasst.
     public class Belastung : Posten
     {
         public override bool CheckBetrag(decimal value)
         { if (value < 0) return true;
             else return false;
         }
-
-        public Belastung(decimal Betrag_neu, string Bezeichnung_neu, string Bank_neu, decimal Frequenz_neu)
+        [JsonConstructor]
+        public Belastung(decimal betrag, string bezeichnung, string bank, decimal frequenz)
         {
-            if (Betrag_neu < 0) { Betrag = Betrag_neu; Art = art.Belastung; }
+            if (betrag < 0) { Betrag = betrag; Art = art.Belastung; }
             else throw new Exception("Betrag für Belastung muss negativ sein");
-            Bezeichnung = Bezeichnung_neu;
-            Bank = Bank_neu;
-            Frequenz = Frequenz_neu;
+            Bezeichnung = bezeichnung;
+            Bank = bank;
+            Frequenz = frequenz;
 
         }
 
@@ -112,14 +116,14 @@ namespace Task4
             else return false;
         }
 
-
-        public Gutschrift(decimal Betrag_neu, string Bezeichnung_neu, string Bank_neu, decimal Frequenz_neu)
+        [JsonConstructor]
+        public Gutschrift(decimal betrag, string bezeichnung, string bank, decimal frequenz)
         {
-            if (Betrag_neu > 0) { Betrag = Betrag_neu; Art = art.Gutschrift; }
+            if (betrag > 0) { Betrag = betrag; Art = art.Gutschrift; }
             else throw new Exception("Gutschrift braucht positiven Betrag.");
-            Bezeichnung = Bezeichnung_neu;
-            Bank = Bank_neu;
-            Frequenz = Frequenz_neu;
+            Bezeichnung = bezeichnung;
+            Bank = bank;
+            Frequenz = frequenz;
 
         }
      

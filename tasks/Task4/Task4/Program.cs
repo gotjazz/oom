@@ -57,8 +57,8 @@ namespace Task4
             Console.WriteLine(meinfile);
             //var import = JsonConvert.DeserializeObject<Posten[]>(JsonConvert.SerializeObject(MeinePosten, settings), settings);
             //var import = JsonConvert.DeserializeObject<Posten[]>(File.ReadAllText(meinfile), settings);
-            //var import = JsonConvert.DeserializeObject<Posten[]>(text, settings);
-            // foreach (var x in import) x.PrintPosten();
+            var import = JsonConvert.DeserializeObject<Posten[]>(text, settings);
+            foreach (var x in import) x.PrintPosten();
 
             File.Delete(meinfile);
 
