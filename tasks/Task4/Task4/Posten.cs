@@ -79,7 +79,7 @@ namespace Task4
     
         public void PrintPosten()
         {
-            Console.WriteLine("[Bezeichnung:{0}] [Bank:{1}]  [Betrag:{2}]   [Frequenz{3}]", Bezeichnung, Bank, Betrag, Frequenz);
+            Console.WriteLine("[Bezeichnung:{0,27}] [Bank:{1,10}]  [Betrag:{2,8:f2}]   [Frequenz{3,5:f2}]", Bezeichnung, Bank, Betrag, Frequenz);
         }
 
     }
