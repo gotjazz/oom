@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Task4
 {
-   
+ 
     public abstract class Posten
     {
         public enum art

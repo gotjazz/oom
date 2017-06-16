@@ -8,48 +8,103 @@ using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
-using System.Net;
+
 
 
 
 namespace Task4
 {
+   
     class Program
     {
+        public static bool IsOdd(decimal value)
+        {
+            return value % 2 != 0;
+        }
+
+
         static void Main(string[] args)
         {
-            var schuldenfalle = new Subject<Posten>();
+            var schuldensammlung = new Subject<Posten>();
             var count = 100;
             var random = new Random();
-
-            schuldenfalle
-                .Do(x => x.PrintPosten())
-                .Subscribe(x =>
-                {
-                   
-                    Console.WriteLine($"Betrag: {x.Betrag}");
-                    x.PrintPosten();
-                   
-                })
-                ;
-
-            var myTask = Task.Run(() =>
+            var mammamia = new Subject<Posten>();
+            Posten bla = null;
+            bool check = true;
+            decimal betragtotal = 0;
+           
+            var BigOne = Task<Posten>.Run(() =>
             {
-                while (true)
-                {
-                    Task.Delay(TimeSpan.FromSeconds(5.0 + random.Next(5))).Wait();
-                    count++;
-
-                    var p = new Belastung(-1 - count * 2, "Posten " + count + "", "Thievery Corp.", 1);
-                    schuldenfalle.OnNext(p);
+            while (true)
+            {
                     
+                    while (check)
+                    { 
+
+                    mammamia
+                    .Where(x => x != null)
+                     .Do(x => bla=x)
+                     .Subscribe()
+                     ;
+
+                    if (bla != null)
+                    {
+                        check = false;
+                        return bla;
+                    }
+
+                    }
+
+
+
+
                 }
             });
 
+
+
+            schuldensammlung
+                .Where(x => IsOdd(x.Frequenz)) 
+                .Do(x => x.PrintPosten())
+                .Where(x=> x.Frequenz > 106)
+                .Subscribe(x =>
+                {
+                   Console.WriteLine($"Consumed Posten NR.{count}");
+
+                })
+                
+                ;
             
+          
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+                var Schuldenfalle = Task<Posten>.Run(() =>
+                {
+                    while (true)
+                    {
+                        Task.Delay(TimeSpan.FromSeconds(0.5 + random.Next(2))).Wait();
+
+                        var p = new Belastung(-1 - count * 2, "Posten " + count + "", "Thievery Corp.", count);
+                        betragtotal = betragtotal + p.Betrag;
+                        schuldensammlung.OnNext(p);
+                        Console.WriteLine($"Created Posten NR.{count}");
+                        count++;
+                        if (p.Betrag < -220) mammamia.OnNext(p);
+                        if (asyncs.pleite(betragtotal).Result)
+                        {
+                            Console.WriteLine("IT'S ALL OVER !!!!!!!!");
+                            System.Environment.Exit(1);
+                        }
+                        
+
+                    }
+                });
+
+            BigOne.ContinueWith(x => Console.WriteLine($"YAY!!! WE'VE REACHED {x.Result.Betrag}"));
             
 
-           
+            Console.ReadLine();
+
+
 
             /*
              var a = new Belastung(-20.99m,"Handyrechnung","Ba-Ca",1);
