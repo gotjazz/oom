@@ -20,8 +20,17 @@ namespace lesson6
             //w.MouseMove += (s, e) => WriteLine($"[MouseMove event] ({e.X}, {e.Y})");
 
             // Rx observables
-            IObservable<Point> moves = Observable.FromEventPattern<MouseEventArgs>(w, "MouseMove").Select(x => x.EventArgs.Location);
+            // IObservable<Point> moves = Observable.FromEventPattern<MouseEventArgs>(w, "MouseMove").Select(x => x.EventArgs.Location);
 
+            //aus stunde - vgl this
+           /* var moves = Observable
+                .FromEventPattern<MouseEventArgs>(w, "MouseMove")
+                .Select(x => x.EventArgs.Location()
+                .Where(p => p.x < 100)
+                .Sample(TimeSpan.FromSeconds(1.0))
+                .Subscribe(p => Console.WriteLine($"[{p.X},{p.Y}]"));
+                ;
+                */
             //moves
             //    .Subscribe(e => WriteLine($"[A] ({e.X}, {e.Y})"))
             //    ;
@@ -37,13 +46,14 @@ namespace lesson6
             //    .Subscribe(e => WriteLine($"[C] ({e.X}, {e.Y})"))
             //    ;
 
-            moves
+           /* moves
                 .Throttle(TimeSpan.FromSeconds(0.2))
                 .DistinctUntilChanged()
                 .Subscribe(e => WriteLine($"[D] ({e.X}, {e.Y})"))
                 ;
 
             Application.Run(w);
+            */
         }
     }
 }
